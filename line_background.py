@@ -2,10 +2,37 @@ import pygame
 from pygame.locals import *
 import sys
 
+def circle_position(screen, num, str): #選択する円の作成→交点
+    # num1 = [2,3,10,9,8,7]
+    if str == "x":
+        x = 510
+        black_x=[550]
+        for i in range(12):
+            for j in range(num[i]):
+                black_x.append(x)
+            x-=40
+        return black_x
+
+    else:
+        black_y=[250]
+        y = [230,210,70,90,110,130,110,90,70,210,230,250]
+        for i in range(12):
+            for j in range(num[i]):
+                black_y.append(y[i])
+                y[i]+=40
+        return black_y
+
+    # black_y = []
 def draw_circle(screen):
-     pygame.draw.ellipse(screen,(249,37,0),(510,70,20,20))
+     pygame.draw.ellipse(screen,(249,37,0),(430,70,20,20))
      pygame.draw.ellipse(screen,(40,175,12),(190,70,20,20))
-     pygame.draw.ellipse(screen,(25,22,135),(31,310,20,20))
+     pygame.draw.ellipse(screen,(25,22,135),(71,250,20,20))
+
+def circles(screen): #redのこま
+    red_x = [430, 390, 430, 350, 390, 430, 310, 350, 390, 430]
+    red_y = [71, 91, 111, 111, 131, 151, 131, 151, 171, 191]
+    for num in range(10):
+        pygame.draw.ellipse(screen,(249,37,0),(red_x[num],red_y[num],20,20))
 
 def draw_line(screen):
     x = 440
@@ -34,8 +61,19 @@ def main():
     screen.fill((255,255,255))
     background(screen)
     draw_line(screen)
-    # draw_circle(screen)
+    num = [2,3,10,9,8,7,8,9,10,3,2,1]
+    for count in range(73):
+        pygame.draw.ellipse(screen,(255,255,255),(circle_position(screen, num, "x")[count],circle_position(screen, num, "y")[count],20,20))
+        pygame.draw.ellipse(screen,(0,0,0),(circle_position(screen, num, "x")[count],circle_position(screen, num, "y")[count],20,20),1)
+    # circles(screen)
     while(1):
+        circles(screen)
+        # red_x = [430, 390, 430, 350, 390, 430, 310, 350, 390, 430]
+        # red_y = [71, 91, 111, 111, 131, 151, 131, 151, 171, 191]
+        # red_y[9] = 231
+        # for num in range(10):
+        #     pygame.draw.ellipse(screen,(249,37,0),(red_x[num],red_y[num],20,20))
+
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == QUIT:
