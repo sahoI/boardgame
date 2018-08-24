@@ -2,10 +2,14 @@ import pygame
 from pygame.locals import *
 import sys
 
+def draw_circle(screen):
+     pygame.draw.ellipse(screen,(249,37,0),(510,70,20,20))
+     pygame.draw.ellipse(screen,(40,175,12),(190,70,20,20))
+     pygame.draw.ellipse(screen,(25,22,135),(31,310,20,20))
+
 def draw_line(screen):
     x = 520
     y = 80
-    # pygame.draw.line(screen, (0,0,0), (x-160,y), (x-160, x), 1) #右から左
     for count in range(12):
         pygame.draw.line(screen, (0,0,0), (x,y), (x, 640-y), 1) #右から左
         pygame.draw.line(screen, (0,0,0), (x+120,380-y), (x+120, 260+y), 1) #左から右
@@ -30,6 +34,7 @@ def main():
     screen.fill((255,255,255))
     background(screen)
     draw_line(screen)
+    draw_circle(screen)
     while(1):
         pygame.display.update()
         for event in pygame.event.get():
