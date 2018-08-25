@@ -3,7 +3,7 @@ from pygame.locals import *
 import sys
 
 def circle_position(screen, num, str): #選択する円の作成→交点
-    # num1 = [2,3,10,9,8,7]
+    # num1 = [2,3,10,9,8,7,8,9,10,3,2,1]
     if str == "x":
         x = 510
         black_x=[550]
@@ -23,18 +23,30 @@ def circle_position(screen, num, str): #選択する円の作成→交点
         return black_y
 
     # black_y = []
-def draw_circle(screen):
-     pygame.draw.ellipse(screen,(249,37,0),(430,70,20,20))
-     pygame.draw.ellipse(screen,(40,175,12),(190,70,20,20))
-     pygame.draw.ellipse(screen,(25,22,135),(71,250,20,20))
+# def draw_circle(screen):
+#      pygame.draw.ellipse(screen,(249,37,0),(430,70,20,20))
+#      pygame.draw.ellipse(screen,(40,175,12),(190,70,20,20))
+#      pygame.draw.ellipse(screen,(25,22,135),(71,250,20,20))
 
-def circles(screen): #redのこま
-    red_x = [430, 390, 430, 350, 390, 430, 310, 350, 390, 430]
-    red_y = [71, 91, 111, 111, 131, 151, 131, 151, 171, 191]
+def red_circles(screen): #redのこま
+    red_x = [440, 400, 440, 360, 400, 440, 320, 360, 400, 440]
+    red_y = [80, 100, 120, 120, 140, 160, 140, 160, 180, 200]
     for num in range(10):
-        pygame.draw.ellipse(screen,(249,37,0),(red_x[num],red_y[num],20,20))
+        pygame.draw.ellipse(screen,(249,37,0),(red_x[num]-10,red_y[num]-10,20,20))
 
-def draw_line(screen):
+def yellow_circles(screen): #yellowのこま
+    yellow_x = [200,200,200,200,160,160,160,120,120,80]
+    yellow_y = [200,240,280,320,220,260,300,240,280,260]
+    for num in range(10):
+        pygame.draw.ellipse(screen,(255,255,0),(yellow_x[num]-10,yellow_y[num]-10,20,20))
+
+def blue_circles(screen): #blueのこま
+    blue_x = [440,440,440,440,400,400,400,360,360,320]
+    blue_y = [320,360,400,440,340,380,420,360,400,380]
+    for num in range(10):
+        pygame.draw.ellipse(screen,(0,0,255),(blue_x[num]-10,blue_y[num]-10,20,20))
+
+def draw_line(screen): #盤の目
     x = 440
     y = 80
     for count in range(9):
@@ -57,17 +69,20 @@ def background(screen):
 def main():
     pygame.init()
     screen = pygame.display.set_mode((640, 520))
-    pygame.display.set_caption("line")
+    pygame.display.set_caption("ダイヤモンドゲーム")
     screen.fill((255,255,255))
-    background(screen)
-    draw_line(screen)
+    background(screen) #背景
+    draw_line(screen) #盤の目
     num = [2,3,10,9,8,7,8,9,10,3,2,1]
-    for count in range(73):
+    for count in range(73): #交点の円
         pygame.draw.ellipse(screen,(255,255,255),(circle_position(screen, num, "x")[count],circle_position(screen, num, "y")[count],20,20))
         pygame.draw.ellipse(screen,(0,0,0),(circle_position(screen, num, "x")[count],circle_position(screen, num, "y")[count],20,20),1)
     # circles(screen)
+
     while(1):
-        circles(screen)
+        red_circles(screen)
+        yellow_circles(screen)
+        blue_circles(screen)
         # red_x = [430, 390, 430, 350, 390, 430, 310, 350, 390, 430]
         # red_y = [71, 91, 111, 111, 131, 151, 131, 151, 171, 191]
         # red_y[9] = 231
@@ -75,6 +90,7 @@ def main():
         #     pygame.draw.ellipse(screen,(249,37,0),(red_x[num],red_y[num],20,20))
 
         pygame.display.update()
+        #イベント処理
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
