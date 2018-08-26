@@ -22,29 +22,13 @@ def circle_position(screen, num, str): #選択する円の作成→交点
                 y[i]+=40
         return black_y
 
-    # black_y = []
-# def draw_circle(screen):
-#      pygame.draw.ellipse(screen,(249,37,0),(430,70,20,20))
-#      pygame.draw.ellipse(screen,(40,175,12),(190,70,20,20))
-#      pygame.draw.ellipse(screen,(25,22,135),(71,250,20,20))
+#文字の色を引数にしてコマの出力を一つのメソッドで書けそう
+#x,y座標の順番を一定にすればfor文で配列を作れそうor引数にx,y座標の配列を挿入する
 
-def red_circles(screen): #redのこま
-    red_x = [440, 400, 440, 360, 400, 440, 320, 360, 400, 440]
-    red_y = [80, 100, 120, 120, 140, 160, 140, 160, 180, 200]
+def circles(screen, x, y, color): #各色のこま
     for num in range(10):
-        pygame.draw.ellipse(screen,(249,37,0),(red_x[num]-10,red_y[num]-10,20,20))
-
-def yellow_circles(screen): #yellowのこま
-    yellow_x = [200,200,200,200,160,160,160,120,120,80]
-    yellow_y = [200,240,280,320,220,260,300,240,280,260]
-    for num in range(10):
-        pygame.draw.ellipse(screen,(255,255,0),(yellow_x[num]-10,yellow_y[num]-10,20,20))
-
-def blue_circles(screen): #blueのこま
-    blue_x = [440,440,440,440,400,400,400,360,360,320]
-    blue_y = [320,360,400,440,340,380,420,360,400,380]
-    for num in range(10):
-        pygame.draw.ellipse(screen,(0,0,255),(blue_x[num]-10,blue_y[num]-10,20,20))
+        pygame.draw.ellipse(screen,color,(x[num]-10,y[num]-10,20,20))
+    font(screen,x,y)
 
 def draw_line(screen): #盤の目
     x = 440
@@ -59,6 +43,48 @@ def draw_line(screen): #盤の目
         x-=40
         y+=20
 
+def font(screen,x,y):
+    num = [1]
+    for i in range(9):
+        num.append(i+2)
+    # print(num)
+    sysfont = pygame.font.SysFont(None, 20)
+    for i in range(10):
+        text = sysfont.render(str(num[i]), True, (255,255,255))
+        screen.blit(text, (x[i]-5,y[i]-5))
+
+# def process():
+#     number = ('red  number:')
+#     posi_x = ('     postion_x:')
+#     posi_y = ('     postion_y:')
+#     return [number,posi_x, posi_y]
+
+# def key_process(screen,event,x,y,color):
+#     if event.type == KEYDOWN: # キーを押したとき
+#         if event.key == K_ESCAPE: # ESCキーなら終了
+#             pygame.quit()
+#             sys.exit()# 矢印キーなら円の中心座標を矢印の方向に移動
+#         if event.key == K_LEFT:
+#             x[4] -= 40
+#             y[4] += 20
+#             print('レフト')
+#             circles(screen,x[4], y[4], color)
+#         if event.key == K_RIGHT:
+#             x[4] += 40
+#             y[4] -= 20
+#             print('ライト')
+#             circles(screen,x[4], y[4], color)
+#         if event.key == K_UP:
+#             y[4] -= 40
+#             print('アップ')
+#             circles(screen,x[4], y[4], color)
+#         if event.key == K_DOWN:
+#             y[4] += 40
+#             print('ダウン')
+#             circles(screen,x[4], y[4], color)
+        # if event.key == K_RETURN:
+
+
 def background(screen):
     x = 0
     for count in range(120):
@@ -71,7 +97,7 @@ def main():
     screen = pygame.display.set_mode((640, 520))
     pygame.display.set_caption("ダイヤモンドゲーム")
     screen.fill((255,255,255))
-    background(screen) #背景
+    # background(screen) #背景
     draw_line(screen) #盤の目
     num = [2,3,10,9,8,7,8,9,10,3,2,1]
     for count in range(73): #交点の円
@@ -80,22 +106,29 @@ def main():
     # circles(screen)
 
     while(1):
-        red_circles(screen)
-        yellow_circles(screen)
-        blue_circles(screen)
-        # red_x = [430, 390, 430, 350, 390, 430, 310, 350, 390, 430]
-        # red_y = [71, 91, 111, 111, 131, 151, 131, 151, 171, 191]
-        # red_y[9] = 231
-        # for num in range(10):
-        #     pygame.draw.ellipse(screen,(249,37,0),(red_x[num],red_y[num],20,20))
+        # red_x = [440, 400, 440, 360, 400, 440, 320, 360, 400, 440]
+        red_x = [440,440,440,440,400,400,400,360,360,320]
+        red_y = [80,120,160,200,100,140,180,120,160,140]
+        green_x = [200,200,200,200,160,160,160,120,120,80]
+        green_y = [200,240,280,320,220,260,300,240,280,260]
+        blue_x = [440,440,440,440,400,400,400,360,360,320]
+        blue_y = [320,360,400,440,340,380,420,360,400,380]
 
+
+        # circles(screen,red_x, red_y, (249,37,0))
+        # circles(screen,green_x, green_y, (64,175,78))
+        # circles(screen,blue_x, blue_y, (0,0,255))
         pygame.display.update()
         #イベント処理
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-
+            # if count == 1: #redの時
+            circles(screen,red_x, red_y, (249,37,0))
+            circles(screen,green_x, green_y, (64,175,78))
+            circles(screen,blue_x, blue_y, (0,0,255))
+            # key_process(screen,event, red_x, red_y, (249,37,0))
 
 if __name__ == "__main__":
     main()
