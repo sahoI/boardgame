@@ -59,29 +59,29 @@ def font(screen,x,y):
 #     posi_y = ('     postion_y:')
 #     return [number,posi_x, posi_y]
 
-# def key_process(screen,event,x,y,color):
-#     if event.type == KEYDOWN: # キーを押したとき
-#         if event.key == K_ESCAPE: # ESCキーなら終了
-#             pygame.quit()
-#             sys.exit()# 矢印キーなら円の中心座標を矢印の方向に移動
-#         if event.key == K_LEFT:
-#             x[4] -= 40
-#             y[4] += 20
-#             print('レフト')
-#             circles(screen,x[4], y[4], color)
-#         if event.key == K_RIGHT:
-#             x[4] += 40
-#             y[4] -= 20
-#             print('ライト')
-#             circles(screen,x[4], y[4], color)
-#         if event.key == K_UP:
-#             y[4] -= 40
-#             print('アップ')
-#             circles(screen,x[4], y[4], color)
-#         if event.key == K_DOWN:
-#             y[4] += 40
-#             print('ダウン')
-#             circles(screen,x[4], y[4], color)
+def key_process(screen,event,x,y,color):
+    if event.type == KEYDOWN: # キーを押したとき
+        if event.key == K_ESCAPE: # ESCキーなら終了
+            pygame.quit()
+            sys.exit()# 矢印キーなら円の中心座標を矢印の方向に移動
+        if event.key == K_LEFT:
+            x[4] -= 40
+            y[4] += 20
+            print('レフト')
+            circles(screen,x[4], y[4], color)
+        if event.key == K_RIGHT:
+            x[4] += 40
+            y[4] -= 20
+            print('ライト')
+            circles(screen,x[4], y[4], color)
+        if event.key == K_UP:
+            y[4] -= 40
+            print('アップ')
+            circles(screen,x[4], y[4], color)
+        if event.key == K_DOWN:
+            y[4] += 40
+            print('ダウン')
+            circles(screen,x[4], y[4], color)
         # if event.key == K_RETURN:
 
 
@@ -97,7 +97,7 @@ def main():
     screen = pygame.display.set_mode((640, 520))
     pygame.display.set_caption("ダイヤモンドゲーム")
     screen.fill((255,255,255))
-    # background(screen) #背景
+    background(screen) #背景
     draw_line(screen) #盤の目
     num = [2,3,10,9,8,7,8,9,10,3,2,1]
     for count in range(73): #交点の円
@@ -106,7 +106,6 @@ def main():
     # circles(screen)
 
     while(1):
-        # red_x = [440, 400, 440, 360, 400, 440, 320, 360, 400, 440]
         red_x = [440,440,440,440,400,400,400,360,360,320]
         red_y = [80,120,160,200,100,140,180,120,160,140]
         green_x = [200,200,200,200,160,160,160,120,120,80]
@@ -114,10 +113,6 @@ def main():
         blue_x = [440,440,440,440,400,400,400,360,360,320]
         blue_y = [320,360,400,440,340,380,420,360,400,380]
 
-
-        # circles(screen,red_x, red_y, (249,37,0))
-        # circles(screen,green_x, green_y, (64,175,78))
-        # circles(screen,blue_x, blue_y, (0,0,255))
         pygame.display.update()
         #イベント処理
         for event in pygame.event.get():
@@ -128,7 +123,7 @@ def main():
             circles(screen,red_x, red_y, (249,37,0))
             circles(screen,green_x, green_y, (64,175,78))
             circles(screen,blue_x, blue_y, (0,0,255))
-            # key_process(screen,event, red_x, red_y, (249,37,0))
+            key_process(screen,event, red_x, red_y, (249,37,0))
 
 if __name__ == "__main__":
     main()
