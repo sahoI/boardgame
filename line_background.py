@@ -104,18 +104,27 @@ def main():
         pygame.draw.ellipse(screen,(255,255,255),(circle_position(screen, num, "x")[count],circle_position(screen, num, "y")[count],20,20))
         pygame.draw.ellipse(screen,(0,0,0),(circle_position(screen, num, "x")[count],circle_position(screen, num, "y")[count],20,20),1)
     # circles(screen)
+    red_x = [440,440,440,440,400,400,400,360,360,320]
+    red_y = [80,120,160,200,100,140,180,120,160,140]
+    green_x = [200,200,200,200,160,160,160,120,120,80]
+    green_y = [200,240,280,320,220,260,300,240,280,260]
+    blue_x = [440,440,440,440,400,400,400,360,360,320]
+    blue_y = [320,360,400,440,340,380,420,360,400,380]
 
     while(1):
-        red_x = [440,440,440,440,400,400,400,360,360,320]
-        red_y = [80,120,160,200,100,140,180,120,160,140]
-        green_x = [200,200,200,200,160,160,160,120,120,80]
-        green_y = [200,240,280,320,220,260,300,240,280,260]
-        blue_x = [440,440,440,440,400,400,400,360,360,320]
-        blue_y = [320,360,400,440,340,380,420,360,400,380]
-
+        print(red_x)
         pygame.display.update()
         #イベント処理
         for event in pygame.event.get():
+            if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
+                print(x, y)
+                pygame.draw.ellipse(screen,(255,255,255),(red_x[3]-10,red_y[3]-10,20,20))
+                pygame.draw.ellipse(screen,(0,0,0),(red_x[3]-10,red_y[3]-10,20,20),1)
+                red_x[3] = x
+                red_y[3] = y
+                # x -= player.get_width() / 2
+                # y -= player.get_height() / 2
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
