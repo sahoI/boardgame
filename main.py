@@ -53,12 +53,6 @@ def font(screen,x,y):
         text = sysfont.render(str(num[i]), True, (255,255,255))
         screen.blit(text, (x[i]-5,y[i]-5))
 
-# def process():
-#     number = ('red  number:')
-#     posi_x = ('     postion_x:')
-#     posi_y = ('     postion_y:')
-#     return [number,posi_x, posi_y]
-
 def background(screen):
     x = 0
     for count in range(120):
@@ -85,27 +79,49 @@ def main():
     blue_x = [440,440,440,440,400,400,400,360,360,320]
     blue_y = [320,360,400,440,340,380,420,360,400,380]
 
+    circles(screen,red_x, red_y, (249,37,0))
+    circles(screen,green_x, green_y, (64,175,78))
+    circles(screen,blue_x, blue_y, (0,0,255))
+    count = 0
     while(1):
-        print(red_x)
         pygame.display.update()
         #イベント処理
         for event in pygame.event.get():
-            if event.type == MOUSEBUTTONDOWN and event.button == 1:
-                x, y = event.pos
-                print(x, y)
-                pygame.draw.rect(screen,(255,255,255),(red_x[3]-10,red_y[3]-10,20,20))
-                pygame.draw.rect(screen,(0,0,0),(red_x[3]-10,red_y[3]-10,20,20),1)
-                red_x[3] = x
-                red_y[3] = y
-                # x -= player.get_width() / 2
-                # y -= player.get_height() / 2
+            # circles(screen,red_x, red_y, (249,37,0))
+            # circles(screen,green_x, green_y, (64,175,78))
+            # circles(screen,blue_x, blue_y, (0,0,255))
+            print(count)
+            if count == 0:
+                if event.type == MOUSEBUTTONDOWN:
+                    x, y = event.pos
+                    # for num in range(10):
+                    if (x > red_x[3]-20) or (x < red_x[3]+20) and (y > red_y[3]-20) or (y < red_y[3]+20):
+                        print(x, red_x[3]-20, y, red_y[3]-20)
+                        pygame.draw.rect(screen,(255,255,0),(red_x[3]-10,red_y[3]-10,20,20))
+                        count += 1
+                    # font(screen,red_x[num],red_y[num])
+                    # print(x, y)
+                    # pygame.draw.rect(screen,(255,255,255),(red_x[3]-10,red_y[3]-10,20,20))
+                    # pygame.draw.rect(screen,(0,0,0),(red_x[3]-10,red_y[3]-10,20,20),1)
+
+                    # red_x[3] = x
+                    # red_y[3] = y
+                    # x -= player.get_width() / 2
+                    # y -= player.get_height() / 2
+            else:
+                # print(count)
+                if event.type == MOUSEBUTTONDOWN:
+                    x, y = event.pos
+                    for num in range(10):
+                        a = 0
+
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            # if count == 1: #redの時
-            circles(screen,red_x, red_y, (249,37,0))
-            circles(screen,green_x, green_y, (64,175,78))
-            circles(screen,blue_x, blue_y, (0,0,255))
+            #コマの表示
+            # circles(screen,red_x, red_y, (249,37,0))
+            # circles(screen,green_x, green_y, (64,175,78))
+            # circles(screen,blue_x, blue_y, (0,0,255))
 
 if __name__ == "__main__":
     main()
