@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 
-def circle_position(screen, num, str): #選択する円の作成→交点
+def circle_position(screen, num, str): #選択する四角の作成→交点
     # num1 = [2,3,10,9,8,7,8,9,10,3,2,1]
     if str == "x":
         x = 510
@@ -60,6 +60,13 @@ def background(screen):
         pygame.draw.line(screen, (0,255,0), (0,x), (1200, x), 2) #右上から左下
         x+=40
 
+def click_process(x, y, red_x, red_y):
+    if x > 420 or x < 460 and y > 60 or y < 100:
+        # pygame.draw.rect(screen,(255,255,0),(red_x[3]-10,red_y[3]-10,20,20))
+        x = 430
+        y = 60
+    return x
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((640, 520))
@@ -87,17 +94,16 @@ def main():
         pygame.display.update()
         #イベント処理
         for event in pygame.event.get():
-            # circles(screen,red_x, red_y, (249,37,0))
-            # circles(screen,green_x, green_y, (64,175,78))
-            # circles(screen,blue_x, blue_y, (0,0,255))
-            print(count)
+            # print(count)
             if count == 0:
                 if event.type == MOUSEBUTTONDOWN:
                     x, y = event.pos
+                    click_process(x,y, red_x, red_y)
                     # for num in range(10):
                     if (x > red_x[3]-20) or (x < red_x[3]+20) and (y > red_y[3]-20) or (y < red_y[3]+20):
                         print(x, red_x[3]-20, y, red_y[3]-20)
-                        pygame.draw.rect(screen,(255,255,0),(red_x[3]-10,red_y[3]-10,20,20))
+                        # pygame.draw.rect(screen,(255,255,0),(red_x[3]-10,red_y[3]-10,20,20))
+                        pygame.draw.rect(screen,(255,255,0),(click_process(x,y, red_x, red_y),click_process(x,y, red_x, red_y)-360 ,20,20))
                         count += 1
                     # font(screen,red_x[num],red_y[num])
                     # print(x, y)
@@ -114,6 +120,7 @@ def main():
                     x, y = event.pos
                     for num in range(10):
                         a = 0
+                count = 0
 
             if event.type == QUIT:
                 pygame.quit()
