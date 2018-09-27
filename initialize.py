@@ -6,7 +6,6 @@ import sys
 def rects(screen, x, y, color):  # 各色のこま
     for num in range(10):
         pygame.draw.rect(screen, color, (x[num] - 10, y[num] - 10, 20, 20))
-    font(screen, x, y)
 
 
 def draw_line(screen):  # 盤の目
@@ -22,35 +21,12 @@ def draw_line(screen):  # 盤の目
         x -= 40
         y += 20
 
-
-def font(screen, x, y):
-    num = [1]
-    for i in range(9):
-        num.append(i + 2)
-    sysfont = pygame.font.SysFont(None, 20)
-    for i in range(10):
-        text = sysfont.render(str(num[i]), True, (255, 255, 255))
-        screen.blit(text, (x[i] - 5, y[i] - 5))
-
-# def record(screen):
-
-
 def background(screen):
     x = 0
     for count in range(120):
         pygame.draw.line(screen, (0, 255, 0), (x, 0), (x, 800), 2)  # 右上から左下
         pygame.draw.line(screen, (0, 255, 0), (0, x), (1200, x), 2)  # 右上から左下
         x += 10
-
-    # x座標のメモリ
-    sysfont = pygame.font.SysFont(None, 20)
-    value = 0
-    for num in range(620):
-        value+=20
-        if num % 40 == 0:
-            text = sysfont.render(str(num), True, (0, 0, 0))
-            screen.blit(text, (num, 40))
-
 
 def direction(screen): #方向キー
     pygame.draw.rect(screen, (255,0,0), (580, 140, 40, 20), 0) #右上

@@ -77,7 +77,7 @@ def main():
                     for num in range(10):
                         if (x > red_x[num] - 20) and (x < red_x[num] + 20) and (y > red_y[num] - 20) and (
                                 y < red_y[num] + 20):
-                            pygame.draw.rect(screen, (255, 0, 255), (red_x[num]-10,red_y[num]-10, 20, 20), 0)
+                            pygame.draw.rect(screen, (255, 255, 0), (red_x[num]-10,red_y[num]-10, 20, 20), 0)
                             pygame.draw.rect(screen, (0, 0, 0), (red_x[num]-10,red_y[num]-10, 20, 20), 1)
                             tmp = num
                             print(num)
