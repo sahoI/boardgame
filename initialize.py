@@ -8,6 +8,66 @@ def rects(screen, x, y, color):  # 各色のこま
         pygame.draw.rect(screen, color, (x[num] - 10, y[num] - 10, 20, 20))
 
 
+def rect_position():  # 選択する四角の作成→交点
+    num = [1, 2, 3, 10, 9, 8, 7, 8, 9, 10, 3, 2, 1]
+    point = [0] * 73
+    # if str == "x":
+    count = 0
+    x = 550
+    y = [250, 230, 210, 70, 90, 110, 130, 110, 90, 70, 210, 230, 250]
+    for i in range(13):
+        for j in range(num[i]):
+            point[count] = (x, y[i])
+            y[i] += 40
+            count += 1
+        x -= 40
+    return point
+
+
+def color_change(color):
+    colors = [0] * 73
+    for i in range(73):
+        c = color[i]
+        if c == 0:
+            colors[i] = (0, 0, 0)
+        elif c == 1:
+            colors[i] = (255, 0, 0)
+        elif c == 2:
+            colors[i] = (0, 0, 255)
+        elif c == 3:
+            colors[i] = (0, 255, 0)
+    return colors
+
+
+def draw_rects(screen, color):
+    colors = color_change(color)
+    num = [1, 2, 3, 10, 9, 8, 7, 8, 9, 10, 3, 2, 1]
+    for count in range(73):  # 交点の四角
+        pygame.draw.rect(screen, colors[count],
+                         (rect_position()[count][0], rect_position()[count][1], 20, 20))
+
+
+def decide_position(color, player):
+    players_red = []
+    players_blue = []
+    players_green = []
+    point = rect_position()
+    num = [1, 2, 3, 10, 9, 8, 7, 8, 9, 10, 3, 2, 1]
+    for i in range(73):
+        if color[i] == 1:
+            players_red.append(point[i])
+        elif color[i] == 2:
+            players_blue.append(point[i])
+        elif color[i] == 3:
+            players_green.append(point[i])
+    if player == 1:
+        return players_red
+    elif player == 2:
+        return players_blue
+    elif player == 3:
+        return players_green
+
+
 def draw_line(screen):  # 盤の目
     x = 440
     y = 80
@@ -21,6 +81,7 @@ def draw_line(screen):  # 盤の目
         x -= 40
         y += 20
 
+
 def background(screen):
     x = 0
     for count in range(120):
@@ -28,13 +89,23 @@ def background(screen):
         pygame.draw.line(screen, (0, 255, 0), (0, x), (1200, x), 2)  # 右上から左下
         x += 10
 
-def direction(screen): #方向キー
-    pygame.draw.rect(screen, (255,0,0), (580, 140, 40, 20), 0) #右上
-    pygame.draw.rect(screen, (255,0,0), (580, 180, 40, 20), 0) #右下
-    pygame.draw.rect(screen, (255,0,0), (500, 140, 40, 20), 0) #左上
-    pygame.draw.rect(screen, (255,0,0), (500, 180, 40, 20), 0) #左下
-    pygame.draw.rect(screen, (255,0,0), (550, 100, 20, 40), 0) #上
-    pygame.draw.rect(screen, (255,0,0), (550, 200, 20, 40), 0) #下
+        # x座標のメモリ
+    sysfont = pygame.font.SysFont(None, 20)
+    value = 0
+    for num in range(620):
+        value += 20
+        if num % 40 == 0:
+            text = sysfont.render(str(num), True, (0, 0, 0))
+            screen.blit(text, (num, 40))
+
+
+def direction(screen):  # 方向キー
+    pygame.draw.rect(screen, (255, 0, 0), (580, 140, 40, 20), 0)  # 右上
+    pygame.draw.rect(screen, (255, 0, 0), (580, 180, 40, 20), 0)  # 右下
+    pygame.draw.rect(screen, (255, 0, 0), (500, 140, 40, 20), 0)  # 左上
+    pygame.draw.rect(screen, (255, 0, 0), (500, 180, 40, 20), 0)  # 左下
+    pygame.draw.rect(screen, (255, 0, 0), (550, 100, 20, 40), 0)  # 上
+    pygame.draw.rect(screen, (255, 0, 0), (550, 200, 20, 40), 0)  # 下
 
     sysfont = pygame.font.SysFont(None, 20)
     text = sysfont.render("R&U", True, (255, 255, 255))
@@ -50,49 +121,30 @@ def direction(screen): #方向キー
     text = sysfont.render("D", True, (255, 255, 255))
     screen.blit(text, (550, 205))
 
-def mouseDownActionDirection(af_x, af_y,x, y,type): #遷移先のx,y座標を求める
-    if (type == "typeX"):
-        print("x")
-        if (af_x > 580)and (af_x < 620):
-            if(af_y > 140) and (af_y < 160):
-                print("R&U")
-            elif(af_y > 180) and (af_y < 220):
-                print("R&D")
-            x += 20
-        elif (af_x > 550) and (af_x < 570):
-            if (af_y > 100) and (af_y < 140):
-                print("UP")
-            elif (af_y > 200) and (af_y < 240):
-                print("DOWN")
-            x -= 20
-        elif (af_x > 500) and (af_x < 540):
-            if(af_y > 140) and (af_y < 160):
-                print("L&U")
-            elif(af_y > 180) and (af_y < 220):
-                print("L&D")
-            x -= 60
-        return x
-    else:
-        print("y")
-        if (af_x > 580)and (af_x < 620):
-            if(af_y > 140) and (af_y < 160):
-                print("R&U")
-                y -= 20
-            elif(af_y > 180) and (af_y < 220):
-                print("R&D")
-                y += 20
-        elif (af_x > 550) and (af_x < 570):
-            if (af_y > 100) and (af_y < 140):
-                print("UP")
-                y -= 40
-            elif (af_y > 200) and (af_y < 240):
-                print("DOWN")
-                y += 40
-        elif (af_x > 500) and (af_x < 540):
-            if(af_y > 140) and (af_y < 160):
-                print("L&U")
-                y -= 20
-            elif(af_y > 180) and (af_y < 220):
-                print("L&D")
-                y += 20
-        return y
+
+def mouseDownActionDirection(af_x, af_y, x, y):  # 遷移先のx,y座標を求める
+    if (af_x > 580) and (af_x < 620):
+        if (af_y > 140) and (af_y < 160):
+            print("R&U")
+            y -= 20
+        elif (af_y > 180) and (af_y < 220):
+            print("R&D")
+            y += 20
+        x += 20
+    elif (af_x > 550) and (af_x < 570):
+        if (af_y > 100) and (af_y < 140):
+            print("UP")
+            y -= 40
+        elif (af_y > 200) and (af_y < 240):
+            print("DOWN")
+            y += 40
+        x -= 20
+    elif (af_x > 500) and (af_x < 540):
+        if (af_y > 140) and (af_y < 160):
+            print("L&U")
+            y -= 20
+        elif (af_y > 180) and (af_y < 220):
+            print("L&D")
+            y += 20
+        x -= 60
+    return x,y
