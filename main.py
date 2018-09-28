@@ -39,8 +39,10 @@ def main():
     red_rect = initialize.decide_position(color,1)
     blue_rect = initialize.decide_position(color,2)
     green_rect = initialize.decide_position(color,3)
-
-    count = 0
+    point = initialize.rect_position()
+    print(red_rect)
+    koma = True #駒を選択するときか方向を選ぶときか
+    turn = 1
     tmp = 0
     while (1):
         pygame.display.update()
@@ -49,23 +51,53 @@ def main():
         # af_x = [0] * 10
         # af_y = [0] * 10
         for event in pygame.event.get():
-            if count == 0:
+            # if turn == 1: #赤の時
+            #     turn_type = red_rect
+            #     print("赤の番")
+            #     af_color = (255,0,0)
+            #     turn = 2
+            # else: #turn == 2: #青の時
+            #     turn_type = blue_rect
+            #     print("青の番")
+            #     af_color = (0,0,255)
+            #     turn = 1
+            if koma:
+                # print(koma)
+                if turn == 1: #赤の時
+                    turn_type = red_rect
+                    # print("赤の番")
+                    af_color = (255,0,0)
+                    turn = 2
+                else: #turn == 2: #青の時
+                    turn_type = blue_rect
+                    # print("青の番")
+                    af_color = (0,0,255)
+                    turn = 1
                 if event.type == MOUSEBUTTONDOWN:
                     x, y = event.pos
                     for num in range(10):
-                        if (x > red_rect[num][0] - 20) and (x < red_rect[num][0] + 20) and (y > red_rect[num][1] - 20) and (
-                                y < red_rect[num][1] + 20):
-                            pygame.draw.rect(screen, (255, 255, 0), (red_rect[num][0], red_rect[num][1], 20, 20), 0)
-                            pygame.draw.rect(screen, (0, 0, 0), (red_rect[num][0], red_rect[num][1], 20, 20), 1)
+                        if (x > turn_type[num][0] - 20) and (x < turn_type[num][0] + 20) and (y > turn_type[num][1] - 20) and (
+                                y < turn_type[num][1] + 20):
+                            pygame.draw.rect(screen, (255, 255, 0), (turn_type[num][0], turn_type[num][1], 20, 20), 0)
+                            pygame.draw.rect(screen, (0, 0, 0), (turn_type[num][0], turn_type[num][1], 20, 20), 1)
+                            print("方向キーを押してね")
                             tmp = num
-                            count = 1
-            elif count == 1:
+                            koma = False
+            else:
+                # print(koma)
                 if event.type == MOUSEBUTTONDOWN:
                     x, y = event.pos
-                    after[tmp] = initialize.mouseDownActionDirection(x, y, red_rect[tmp][0], red_rect[tmp][1])
-                    # print(num, tmp, af_x[tmp], af_y[tmp], red_rect[tmp][0], red_rect[tmp][1])
-                    pygame.draw.rect(screen, (255, 0, 0), (after[tmp][0] + 20, after[tmp][1], 20, 20), 0)
-                    count = 0
+                    after[tmp] = initialize.mouseDownActionDirection(x, y, turn_type[tmp][0], turn_type[tmp][1])
+                    # print(num, tmp, af_x[tmp], af_y[tmp], turn_type[tmp][0], turn_type[tmp][1])
+                    pygame.draw.rect(screen, af_color, (after[tmp][0], after[tmp][1], 20, 20), 0)
+                    pygame.draw.rect(screen, (0, 0, 0), (turn_type[tmp][0], turn_type[tmp][1], 20, 20), 0)
+                    print(turn_type[tmp][1], after[tmp][1])
+                    turn_type[tmp][0] = after[tmp][0]
+                    turn_type[tmp][1] = after[tmp][1]
+
+                    koma = True
+                    print(color)
+            initialize.draw_rects(screen, color)
 
         if event.type == QUIT:
             pygame.quit()

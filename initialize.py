@@ -10,14 +10,15 @@ def rects(screen, x, y, color):  # 各色のこま
 
 def rect_position():  # 選択する四角の作成→交点
     num = [1, 2, 3, 10, 9, 8, 7, 8, 9, 10, 3, 2, 1]
-    point = [0] * 73
+    point = [[0 for i in range(2)]for j in range(73)]
     # if str == "x":
     count = 0
     x = 550
     y = [250, 230, 210, 70, 90, 110, 130, 110, 90, 70, 210, 230, 250]
     for i in range(13):
         for j in range(num[i]):
-            point[count] = (x, y[i])
+            point[count][0] = x
+            point[count][1] = y[i]
             y[i] += 40
             count += 1
         x -= 40
@@ -130,7 +131,7 @@ def mouseDownActionDirection(af_x, af_y, x, y):  # 遷移先のx,y座標を求�
         elif (af_y > 180) and (af_y < 220):
             print("R&D")
             y += 20
-        x += 20
+        x += 40
     elif (af_x > 550) and (af_x < 570):
         if (af_y > 100) and (af_y < 140):
             print("UP")
@@ -138,7 +139,7 @@ def mouseDownActionDirection(af_x, af_y, x, y):  # 遷移先のx,y座標を求�
         elif (af_y > 200) and (af_y < 240):
             print("DOWN")
             y += 40
-        x -= 20
+        # x -= 20
     elif (af_x > 500) and (af_x < 540):
         if (af_y > 140) and (af_y < 160):
             print("L&U")
@@ -146,5 +147,8 @@ def mouseDownActionDirection(af_x, af_y, x, y):  # 遷移先のx,y座標を求�
         elif (af_y > 180) and (af_y < 220):
             print("L&D")
             y += 20
-        x -= 60
-    return x,y
+        x -= 40
+    return (x,y)
+
+# def change_position_color():
+
