@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import sys
+import pygame.gfxdraw
 
 
 def rects(screen, x, y, color):  # 各色のこま
@@ -10,7 +11,7 @@ def rects(screen, x, y, color):  # 各色のこま
 
 def rect_position():  # 選択する四角の作成→交点
     num = [1, 2, 3, 10, 9, 8, 7, 8, 9, 10, 3, 2, 1]
-    point = [[0 for i in range(2)]for j in range(73)]
+    point = [[0 for i in range(2)] for j in range(73)]
     # if str == "x":
     count = 0
     x = 550
@@ -70,6 +71,9 @@ def decide_position(color, player):
 
 
 def draw_line(screen):  # 盤の目
+    print("三角形")
+    pygame.gfxdraw.filled_trigon(screen, 200, 80, 320, 140, 200, 200, (156, 167, 226))
+    pygame.gfxdraw.filled_trigon(screen, 200, 320, 200, 440, 320, 380, (235, 121, 136))
     x = 440
     y = 80
     for count in range(9):
@@ -148,7 +152,39 @@ def mouseDownActionDirection(af_x, af_y, x, y):  # 遷移先のx,y座標を求�
             print("L&D")
             y += 20
         x -= 40
-    return (x,y)
+    return (x, y)
 
-# def change_position_color():
 
+def mainProcess(screen, turn_type, turn, event, after):
+    if turn == 1:  # 赤の時
+        print("赤の番")
+        af_color = (255, 0, 0)
+        turn = 2
+    else:  # turn == 2: #青の時
+        print("青の番")
+        af_color = (0, 0, 255)
+        turn = 1
+    # pygame.event.wait
+    if event.type == MOUSEBUTTONDOWN:
+        x, y = event.pos
+        for num in range(10):
+            if (x > turn_type[num][0] - 20) and (x < turn_type[num][0] + 20) and (y > turn_type[num][1] - 20) and (
+                    y < turn_type[num][1] + 20):
+                pygame.draw.rect(screen, (255, 255, 0), (turn_type[num][0], turn_type[num][1], 20, 20), 0)
+                pygame.draw.rect(screen, (0, 0, 0), (turn_type[num][0], turn_type[num][1], 20, 20), 1)
+                print("方向キーを押してね")
+                tmp = num
+                koma = False
+        # pygame.event.wait
+        # else:
+        if event.type == MOUSEBUTTONDOWN:
+            x, y = event.pos
+            after[tmp] = mouseDownActionDirection(x, y, turn_type[tmp][0], turn_type[tmp][1])
+            # print(num, tmp, af_x[tmp], af_y[tmp], turn_type[tmp][0], turn_type[tmp][1])
+            pygame.draw.rect(screen, af_color, (after[tmp][0], after[tmp][1], 20, 20), 0)
+            pygame.draw.rect(screen, (0, 0, 0), (turn_type[tmp][0], turn_type[tmp][1], 20, 20), 0)
+            print(turn_type[tmp][1], after[tmp][1])
+            turn_type[tmp][0] = after[tmp][0]
+            turn_type[tmp][1] = after[tmp][1]
+
+            # koma = True
