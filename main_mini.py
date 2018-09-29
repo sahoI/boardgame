@@ -16,12 +16,12 @@ def main():
     color = [0,
              0, 0,
              1, 1, 1, 0, 2, 2, 2,
-             1, 1, 0, 2, 2, 2,
-             1, 0, 0, 0, 0,
-             0, 0, 0, 0, 1, 1,
-             0, 0, 0, 0, 1, 1, 1,
-             0, 0,
-             0]
+             1, 1, 0, 0, 2, 2,
+             1, 0, 0, 0, 2,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 3, 3, 3, 0, 0,
+             3, 3,
+             3]
 
     initialize_mini.draw_rects(screen, color)
     red_rect = initialize_mini.decide_position(color, 1)
@@ -44,6 +44,9 @@ def main():
                     elif turn == 2:  # 青の時
                         turn_type = blue_rect
                         print("青の番")
+                    elif turn == 3:  # 緑の時
+                        turn_type = green_rect
+                        print("緑の番")
                     for num in range(6):
                         if (x > turn_type[num][0] - 20) and (x < turn_type[num][0] + 40) and (
                                 y > turn_type[num][1] - 20) and (
@@ -66,6 +69,8 @@ def main():
                         if turn == 1:
                             turn = 2
                         elif turn == 2:
+                            turn = 3
+                        elif turn == 3:
                             turn = 1
                         color[before_color_num] = 0
                         print(turn_type[tmp][1], after[tmp][1])

@@ -16,7 +16,7 @@ def background(screen):
 def draw_line(screen):  # 盤の目
     pygame.gfxdraw.filled_trigon(screen, 260, 100, 260, 260, 420, 180, (156, 167, 226))  # 青
     pygame.gfxdraw.filled_trigon(screen, 260, 420, 260, 580, 420, 500, (235, 121, 136))  # 赤
-    # pygame.gfxdraw.filled_trigon(screen, 580, 260, 580, 420, 740, 340, (50, 204, 18))  # 緑
+    pygame.gfxdraw.filled_trigon(screen, 580, 260, 580, 420, 740, 340, (0, 255, 0))  # 緑
     x = 580
     y = 80
     for count in range(7):
@@ -64,7 +64,7 @@ def color_change(color):
         elif c == 2:
             colors[i] = (0, 0, 255)
         elif c == 3:
-            colors[i] = (0, 255, 0)
+            colors[i] = (50, 204, 18)
     return colors
 
 
@@ -100,25 +100,19 @@ def decide_position(color, player):
 def mouseDownActionDirection(af_x, af_y, x, y):  # 遷移先のx,y座標を求める
     if (af_x > 800) and (af_x < 860):
         if (af_y > 100) and (af_y < 140):
-            print("R&U")
             y -= 40
         elif (af_y > 180) and (af_y < 240):
-            print("R&D")
             y += 40
         x += 80
     elif (af_x > 750) and (af_x < 790):
         if (af_y > 60) and (af_y < 120):
-            print("UP")
             y -= 80
         elif (af_y > 200) and (af_y < 260):
-            print("DOWN")
             y += 80
     elif (af_x > 680) and (af_x < 740):
         if (af_y > 100) and (af_y < 140):
-            print("L&U")
             y -= 40
         elif (af_y > 180) and (af_y < 220):
-            print("L&D")
             y += 40
         x -= 80
     return (x, y)
@@ -150,26 +144,26 @@ def decide_color(x, y):  # 色がついている箇所が何番目の番号か�
 def win_check(screen,color):
     red_count = 0
     blue_count = 0
-    # green_count = 0
+    green_count = 0
     red_win_color = [20, 25, 26, 31, 32, 33]
     blue_win_color = [16, 21, 22, 27, 28, 29]
-    # green_win_color = [0, 1, 2, 3, 4, 5]
+    green_win_color = [0, 1, 2, 3, 4, 5]
     for i in range(6):
         if color[red_win_color[i]] == 1:
             red_count += 1
         if color[blue_win_color[i]] == 2:
             blue_count += 1
-        # if color[green_win_color[i]] == 2:
-        #     green_count += 1
+        if color[green_win_color[i]] == 2:
+            green_count += 1
     if red_count == 6:
         print("赤の勝利")
         result(screen,"RED")
     elif blue_count == 6:
         print("青の勝利")
         result(screen,"BLUE")
-    # elif green_count == 6:
-    #     print("緑の勝利")
-    #     result(screen,"GREEN")
+    elif green_count == 6:
+        print("緑の勝利")
+        result(screen,"GREEN")
 
 def result(screen,color):
     screen.fill((255, 255, 255))
