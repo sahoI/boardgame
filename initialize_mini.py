@@ -141,7 +141,7 @@ def decide_color(x, y):  # 色がついている箇所が何番目の番号か�
             return i
 
 
-def win_check(screen,color):
+def win_check(screen, color):
     red_count = 0
     blue_count = 0
     green_count = 0
@@ -157,34 +157,39 @@ def win_check(screen,color):
             green_count += 1
     if red_count == 6:
         print("赤の勝利")
-        result(screen,"RED")
+        result(screen, "RED")
     elif blue_count == 6:
         print("青の勝利")
-        result(screen,"BLUE")
+        result(screen, "BLUE")
     elif green_count == 6:
         print("緑の勝利")
-        result(screen,"GREEN")
+        result(screen, "GREEN")
 
-def result(screen,color):
+
+def result(screen, color):
     screen.fill((255, 255, 255))
     sysfont = pygame.font.SysFont(None, 120)
-    text = sysfont.render("Winner"+color, True, (0,0,0))
+    text = sysfont.render("Winner" + color, True, (0, 0, 0))
     screen.blit(text, (200, 200))
-    pygame.draw.rect(screen, (0,0,0),(250,600, 160, 60),5)
-    sysfont2 = pygame.font.SysFont(None, 60)
-    end = sysfont2.render("END", True, (255,0,255))
-    screen.blit(end, (290,610))
-    pygame.draw.rect(screen, (0,0,0),(450,600, 160, 60),5)
-    again = sysfont2.render("AGAIN", True, (0,0,255))
-    screen.blit(again, (460,610))
 
     while (1):
-        pygame.display.update()
         for event in pygame.event.get():
             if event.type == MOUSEBUTTONDOWN:
                 x, y = event.pos
-                if (y > 600) and (y < 660):
-                    if (x > 250) and (x < 410):
-                        sys.exit()
-                    elif (x > 450) and (x < 610):
-                        main_mini.main()
+                information(screen,x, y)
+
+
+def information(screen,x, y):
+    pygame.draw.rect(screen, (0, 0, 0), (250, 600, 160, 60), 5)
+    sysfont2 = pygame.font.SysFont(None, 60)
+    end = sysfont2.render("END", True, (255, 0, 255))
+    screen.blit(end, (290, 610))
+    pygame.draw.rect(screen, (0, 0, 0), (450, 600, 160, 60), 5)
+    again = sysfont2.render("AGAIN", True, (0, 0, 255))
+    screen.blit(again, (460, 610))
+
+    if (y > 600) and (y < 660):
+        if (x > 250) and (x < 410):
+            sys.exit()
+        elif (x > 450) and (x < 610):
+            main_mini.main()

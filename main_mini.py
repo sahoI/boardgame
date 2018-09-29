@@ -38,6 +38,7 @@ def main():
             if koma:
                 if event.type == MOUSEBUTTONDOWN:
                     x, y = event.pos
+                    initialize_mini.information(screen,x,y)
                     if turn == 1:  # 赤の時
                         turn_type = red_rect
                         print("赤の番")
@@ -58,6 +59,7 @@ def main():
             else:
                 if event.type == MOUSEBUTTONDOWN:
                     x, y = event.pos
+                    initialize_mini.information(screen,x,y)
                     after[tmp] = initialize_mini.mouseDownActionDirection(x, y, turn_type[tmp][0], turn_type[tmp][1])
                     before_color_num = initialize_mini.decide_color(turn_type[tmp][0], turn_type[tmp][1])
                     after_color_num = initialize_mini.decide_color(after[tmp][0], after[tmp][1])
